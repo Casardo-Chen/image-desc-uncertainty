@@ -22,7 +22,7 @@ links:
     url: https://github.com/Casardo-Chen/surface-mllm-variations
     icon: ri:github-line
   - name: System
-    url: https://surface-mllm-variations.github.io/
+    url: #
     icon: ri:link
 
 # The color theme of the page. Defaults to "device" (the preference set in the user's brower or operating system). Setting this to "light" or "dark" will override the user's preference. This is useful if your figures only look good in one theme.
@@ -82,40 +82,19 @@ Multimodal large language models (MLLMs) provide new opportunities for blind and
 | **Provenance Indicator**    | None               | Trials             | Prompts            | Models             |
 | **Modality**                | Text               | Sound              | Visualization      | Haptics            |
 
-Use the figure component to display images, videos, equations, or any other element, with an optional caption.
+## Uncertainty Presentation
 
-If you stored your figures as PDFs, the `Picture` component can convert them into web-friendly images automatically.
+| **None** | **Language** | **Percentage** | **Source** |
+|-----------|--------------|----------------|-------------|
+| There are two <span style="background-color:#ccffcc;">white chairs</span> on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble or glass or wood</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books and a television</span>. | There are two <span style="background-color:#ccffcc;">white (well-supported)</span> chairs on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble (moderately supported) or glass (poorly supported) or wood (very little support)</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books (moderately supported) and a television (moderately supported)</span>. | There are two <span style="background-color:#ccffcc;">white (100%)</span> chairs on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble (56%) or glass (33%) or wood (11%)</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books (33%) and a television (33%)</span>. | There are two <span style="background-color:#ccffcc;">white (3 of 3 GPT, 3 of 3 Gemini, 3 of 3 Claude)</span> chairs on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble (3 of 3 GPT, 2 of 3 Gemini) or glass (3 of 3 Claude) or wood (1 of 3 Gemini)</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books (3 of 3 GPT) and a television (3 of 3 Gemini)</span>. |
 
-<Figure>
-  <Picture slot="figure" src="../assets/allstate-sparsity.pdf" alt="Impact of the sparsity-aware algorithm in XGBoost on the Allstate-10K dataset." invertInDarkMode />
-  <Fragment slot="caption">Impact of the sparsity-aware algorithm in [XGBoost](https://arxiv.org/abs/1603.02754) on the Allstate-10K dataset.</Fragment>
-</Figure>
+**Table:** Variation-aware description without support indicator and with three variant support indicators (Language, Percentage, Source).  
+Agreements (<span style="background-color:#ccffcc;">green</span>), disagreements (<span style="background-color:#ffcccc;">red</span>), and unique mentions (<span style="background-color:#cce5ff;">blue</span>) are highlighted.
 
-Use the `Comparison` component to compare two elements with an interactive slider. It should work for any component or HTML element, including images, videos, and 3D models.
-
-
-## Support Indicators
-
-Use the two columns component to display two columns of content. In this example, the first column contains a figure with a YouTube video and the second column contains a figure with a custom [React](https://react.dev/) component. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
-
-<TwoColumns>
-  <Figure slot="left">
-    <YouTubeVideo slot="figure" videoId="wjZofJX0v4M" />
-    <Fragment slot="caption">Take a look at this YouTube video.</Fragment>
-  </Figure>
-  <Figure slot="right">
-    <ModelViewer slot="figure" src="/BoxVertexColors.glb" alt="A cube colored with a rainbow gradient" />
-    <Fragment slot="caption">Now look at this cube, rendered with the `<model-viewer>` web component.</Fragment>
-  </Figure>
-</TwoColumns>
-
-## LaTeX
-
-You can also add LaTeX formulas, rendered during the build process using [KaTeX](https://katex.org/) so they're quick to load for visitors of your project page. You can write them inline, like this: <LaTeX inline formula="a^2 + b^2 = c^2" />. Or, you can write them as a block:
-
-<LaTeX formula="\int_a^b f(x) dx" />
 
 ## Results
+
+To be updated.
 
 
 

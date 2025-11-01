@@ -1,35 +1,29 @@
 ---
 layout: ../layouts/Layout.astro
-title: Research Project Page Template
+title: Surfacing Variations to Calibrate Perceived Reliability of MLLM-Generated Image Descriptions
 authors:
-  - name: Roman Hauksson
-    url: https://roman.technology
-    institution: University of Texas at Dallas
-    notes: ["*", †]
-  - name: Author Two
-    institution: Institution Two
-    notes: ["*", †]
-  - name: Author Three
-    institution: Institution Three
-    notes: ["*"]
-  - name: Author Four
-    institution: Institution Four
-conference: Conference Name
-notes:
-  - symbol: "*"
-    text: author note one
-  - symbol: †
-    text: author note two
+  - name: Meng Chen
+    url: https://meng-chen.com
+    institution: UT Austin
+  - name: Akhil Iyer
+    institution: UT Austin
+  - name: Amy Pavel
+    url: https://amypavel.com
+    institution: UC Berkeley
+conference: ASSETS 2025
 links:
   - name: Paper
-    url: https://github.com/RomanHauksson/academic-project-astro-template
+    url: https://dl.acm.org/doi/full/10.1145/3663547.3746393
     icon: ri:file-pdf-2-line
-  - name: Code
-    url: https://github.com/RomanHauksson/academic-project-astro-template
-    icon: ri:github-line
   - name: arXiv
-    url: https://github.com/RomanHauksson/academic-project-astro-template
+    url: https://arxiv.org/abs/2507.15692
     icon: academicons:arxiv
+  - name: Code
+    url: https://github.com/Casardo-Chen/surface-mllm-variations
+    icon: ri:github-line
+  - name: System
+    url: https://surface-mllm-variations.github.io/
+    icon: ri:link
 
 # The color theme of the page. Defaults to "device" (the preference set in the user's brower or operating system). Setting this to "light" or "dark" will override the user's preference. This is useful if your figures only look good in one theme.
 theme: device
@@ -57,28 +51,38 @@ import outside from "../assets/outside.mp4";
 import transformer from "../assets/transformer.webp";
 import dogsDiffc from "../assets/dogs-diffc.png"
 import dogsTrue from "../assets/dogs-true.png"
+import teaser from "../assets/teaser.png"
 
 import Table from "../components/Table.astro";
 export const components = { table: Table }
 
-<Video src={outside} />
+<Figure>
+  <Picture slot="figure" src={teaser} alt="Diagram of the transformer deep learning architecture." invertInDarkMode />
+  <Fragment slot="caption"> <b>(A)</b> Input image and prompt. <b>(B)</b> Raw image descriptions from 3 MLLMs (GPT-4o, Gemini-1.5-Pro, Claude-3.7-Sonnet).
+<b>(C)</b> <i>Variation-Aware Description</i> aggregates all model outputs into a hierarchical markdown. Major variations are highlighted
+in indigo. <b>(D)</b> <i>Variation summary</i> further surfaces key agreements, disagreements, and unique mentions across models.</Fragment>
+</Figure>
 
 <HighlightedSection>
 
 ## Abstract
 
-This is a live demo for a template you can use to create a simple project page for your research paper. See the code for the template and instructions on how to use it yourself [here](https://github.com/RomanHauksson/academic-project-astro-template). It's made with the [Astro web framework](https://astro.build/) and styled with [Tailwind CSS](https://tailwindcss.com/). You write the content in [MDX](https://mdxjs.com/), which enables markdown formatting like **bold**, _italics_, and ~strikethrough~, as well as custom components like <SmallCaps>small caps.</SmallCaps>
+Multimodal large language models (MLLMs) provide new opportunities for blind and low vision (BLV) people to access visual information in their daily lives. However, these models often produce errors that are difficult to detect without sight, posing safety and social risks in scenarios from medication identification to outfit selection. While BLV MLLM users use creative workarounds such as cross-checking between tools and consulting sighted individuals, these approaches are often time-consuming and impractical. We explore how systematically surfacing variations across multiple MLLM responses can support BLV users to detect unreliable information without visually inspecting the image. We contribute a design space for eliciting and presenting variations in MLLM descriptions, a prototype system implementing three variation presentation styles, and findings from a user study with 15 BLV participants. Our results demonstrate that presenting variations significantly increases users’ ability to identify unreliable claims (by 4.9x using our approach compared to single descriptions) and significantly decreases perceived reliability of MLLM responses. 14 of 15 participants preferred seeing variations of MLLM responses over a single description, and all expressed interest in using our system for tasks from understanding a tornado’s path to posting an image on social media.
 
 </HighlightedSection>
 
-## Figures
+## Design Space
+
+| **Dimension**              | **Alternatives** | | | |
+|-----------------------------|--------------------|--------------------|--------------------|--------------------|
+| **Elicitation of Variants** | `Trials`             |  `Prompts`           |  `Models`            | `Images`             |
+| **Comparison Support**      | List               | Variation-aware description | Variation Summary |            |
+| **Comparison Granularity**  | Words              | Atomic facts       | Sentences        | Responses            |
+| **Support Indicator**       | None               | Percentage         | Language         | Source               |
+| **Provenance Indicator**    | None               | Trials             | Prompts            | Models             |
+| **Modality**                | Text               | Sound              | Visualization      | Haptics            |
 
 Use the figure component to display images, videos, equations, or any other element, with an optional caption.
-
-<Figure>
-  <Picture slot="figure" src={transformer} alt="Diagram of the transformer deep learning architecture." invertInDarkMode />
-  <Fragment slot="caption">Diagram of the transformer deep learning architecture.</Fragment>
-</Figure>
 
 If you stored your figures as PDFs, the `Picture` component can convert them into web-friendly images automatically.
 
@@ -89,15 +93,8 @@ If you stored your figures as PDFs, the `Picture` component can convert them int
 
 Use the `Comparison` component to compare two elements with an interactive slider. It should work for any component or HTML element, including images, videos, and 3D models.
 
-<Figure>
-  <Comparison slot="figure" client:idle >
-    <Picture slot="itemOne" src={dogsDiffc} alt="Photo of two dogs running side-by-side in shallow water, lossily compressed using the DiffC algorithm" />
-    <Picture slot="itemTwo" src={dogsTrue} alt="Original photo of two dogs running side-by-side in shallow water" />
-  </Comparison>
-  <Fragment slot="caption">A photo of two dogs running side-by-side in shallow water, lossily compressed using the [DiffC algorithm](https://jeremyiv.github.io/diffc-project-page/).</Fragment>
-</Figure>
 
-## Two columns
+## Support Indicators
 
 Use the two columns component to display two columns of content. In this example, the first column contains a figure with a YouTube video and the second column contains a figure with a custom [React](https://react.dev/) component. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
 
@@ -118,26 +115,28 @@ You can also add LaTeX formulas, rendered during the build process using [KaTeX]
 
 <LaTeX formula="\int_a^b f(x) dx" />
 
-## Tables
+## Results
 
-Add simple tables using [GitHub Flavored Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables):
 
-| Model | Accuracy | F1 score | Training time (hours) |
-| :--- | :---: | :---: | :---: |
-| BERT-base | 0.89 | 0.87 | 4.5 |
-| RoBERTa-large | 0.92 | 0.91 | 7.2 |
-| DistilBERT | 0.86 | 0.84 | 2.1 |
-| XLNet | 0.90 | 0.89 | 6.8 |
 
-## BibTeX citation
-
-Displaying your BibTeX citation in a code block makes it easy to copy and paste.
+## BibTeX 
 
 ```bibtex
-@misc{roman2024academic,
-  author = "{Roman Hauksson}",
-  title = "Academic Project Page Template",
-  year = "2024",
-  howpublished = "\url{https://research-template.roman.technology}",
+@inproceedings{10.1145/3663547.3746393,
+author = {Chen, Meng and Iyer, Akhil and Pavel, Amy},
+title = {Surfacing Variations to Calibrate Perceived Reliability of MLLM-generated Image Descriptions},
+year = {2025},
+isbn = {9798400706769},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3663547.3746393},
+doi = {10.1145/3663547.3746393},
+abstract = {Multimodal large language models (MLLMs) provide new opportunities for blind and low vision (BLV) people to access visual information in their daily lives. However, these models often produce errors that are difficult to detect without sight, posing safety and social risks in scenarios from medication identification to outfit selection. While BLV MLLM users use creative workarounds such as cross-checking between tools and consulting sighted individuals, these approaches are often time-consuming and impractical. We explore how systematically surfacing variations across multiple MLLM responses can support BLV users to detect unreliable information without visually inspecting the image. We contribute a design space for eliciting and presenting variations in MLLM descriptions, a prototype system implementing three variation presentation styles, and findings from a user study with 15 BLV participants. Our results demonstrate that presenting variations significantly increases users’ ability to identify unreliable claims (by 4.9x using our approach compared to single descriptions) and significantly decreases perceived reliability of MLLM responses. 14 of 15 participants preferred seeing variations of MLLM responses over a single description, and all expressed interest in using our system for tasks from understanding a tornado’s path to posting an image on social media.},
+booktitle = {Proceedings of the 27th International ACM SIGACCESS Conference on Computers and Accessibility},
+articleno = {66},
+numpages = {17},
+keywords = {Accessibility, Image Descriptions, Multimodal Large Language Models, Variations, AI Errors, Trust},
+location = {Denver, CO, USA },
+series = {ASSETS '25}
 }
 ```

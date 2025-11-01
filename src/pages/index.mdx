@@ -57,7 +57,7 @@ import Table from "../components/Table.astro";
 export const components = { table: Table }
 
 <Figure>
-  <Picture slot="figure" src={teaser} alt="Diagram of the transformer deep learning architecture." invertInDarkMode />
+  <Picture slot="figure" src={teaser} alt="System Pipeline" invertInDarkMode />
   <Fragment slot="caption"> <b>(A)</b> Input image and prompt. <b>(B)</b> Raw image descriptions from 3 MLLMs (GPT-4o, Gemini-1.5-Pro, Claude-3.7-Sonnet).
 <b>(C)</b> <i>Variation-Aware Description</i> aggregates all model outputs into a hierarchical markdown. Major variations are highlighted
 in indigo. <b>(D)</b> <i>Variation summary</i> further surfaces key agreements, disagreements, and unique mentions across models.</Fragment>
@@ -88,13 +88,18 @@ Multimodal large language models (MLLMs) provide new opportunities for blind and
 |-----------|--------------|----------------|-------------|
 | There are two <span style="background-color:#ccffcc;">white chairs</span> on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble or glass or wood</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books and a television</span>. | There are two <span style="background-color:#ccffcc;">white (well-supported)</span> chairs on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble (moderately supported) or glass (poorly supported) or wood (very little support)</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books (moderately supported) and a television (moderately supported)</span>. | There are two <span style="background-color:#ccffcc;">white (100%)</span> chairs on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble (56%) or glass (33%) or wood (11%)</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books (33%) and a television (33%)</span>. | There are two <span style="background-color:#ccffcc;">white (3 of 3 GPT, 3 of 3 Gemini, 3 of 3 Claude)</span> chairs on the left and a grey sofa on the right. At the center there is a white coffee table with a <span style="background-color:#ffcccc;">marble (3 of 3 GPT, 2 of 3 Gemini) or glass (3 of 3 Claude) or wood (1 of 3 Gemini)</span> top and a gold base. There is a built-in shelf on the back wall with decorative items, like <span style="background-color:#cce5ff;">books (3 of 3 GPT) and a television (3 of 3 Gemini)</span>. |
 
-**Table:** Variation-aware description without support indicator and with three variant support indicators (Language, Percentage, Source).  
-Agreements (<span style="background-color:#ccffcc;">green</span>), disagreements (<span style="background-color:#ffcccc;">red</span>), and unique mentions (<span style="background-color:#cce5ff;">blue</span>) are highlighted.
+Variation-aware description without support indicator and with three variant support indicators (Language, Percentage, Source). Agreements (top, <span style="background-color:#ccffcc;">green</span>), disagreements (middle, <span style="background-color:#ffcccc;">red</span>), and unique mentions (bottom, <span style="background-color:#cce5ff;">blue</span>) are highlighted.
 
 
 ## Results
 
 To be updated.
+
+<Figure>
+  <Picture slot="figure" src="../assets/results_bars.pdf" alt="Results" invertInDarkMode />
+  <Fragment slot="caption"> Left: average identified unreliable claims reported by participants overall and in each image category. Right: average perceived reliability rating (1 = not reliable at all, 7 = most reliable) overall and in each image category. Error bars represent a 95\% confidence interval. We applied the Friedman test followed by pairwise Wilcoxon signed-rank tests with Bonferroni correction. Significance is marked as * $p < 0.05$, ** $p < 0.01$, and *** $p < 0.001$..</Fragment>
+</Figure>
+
 
 
 

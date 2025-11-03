@@ -54,7 +54,7 @@ import Table from "../components/Table.astro";
 export const components = { table: Table }
 
 <Figure>
-  <Picture slot="figure" src={teaser} alt="System Pipeline" invertInDarkMode />
+  <Picture slot="figure" src={teaser} alt="Four labeled panels (A–D) show how multiple MLLM outputs are aggregated into variation‑aware descriptions. (A) Input photo of a home interior wall with framed art, a chair holding a laundry basket, and a small floral‑covered side table; prompt: Describe the room setting. Does this wall setting look okay? (B) Individual model descriptions (Gemini, GPT, Claude). (C) Hierarchical variation‑aware Description groups cross‑model observations: room is a living space (bedroom or den); walls soft green or gray textured; main furniture (bed or armchair or loveseat); other noted items (laundry basket on chair, small side table); wall decor pieces incl. larger artwork and red‑flower print; subjective opinions split between cohesive/cozy vs cluttered. (D) Variation summary. Agreements (living space, small table, framed decor), Disagreements (main furniture type; decor cohesion), and Unique Mentions (GPT mentioned patterned fabric; Gemini mentioned hanging tassel; Claude mentioned traditional and vintage style)." invertInDarkMode />
   <Fragment slot="caption"> <b>(A)</b> Input image and prompt. <b>(B)</b> Raw image descriptions from 3 MLLMs (GPT-4o, Gemini-1.5-Pro, Claude-3.7-Sonnet).
 <b>(C)</b> <i>Variation-Aware Description</i> aggregates all model outputs into a hierarchical markdown. Major variations are highlighted
 in indigo. <b>(D)</b> <i>Variation summary</i> further surfaces key agreements, disagreements, and unique mentions across models.</Fragment>
@@ -68,7 +68,7 @@ Multimodal large language models (MLLMs) provide new opportunities for blind and
 
 </HighlightedSection>
 
-## Design 
+## Design and Pipeline
 
 | **Dimension**              | **Alternatives** | | | |
 |-----------------------------|--------------------|--------------------|--------------------|--------------------|
@@ -79,10 +79,13 @@ Multimodal large language models (MLLMs) provide new opportunities for blind and
 | **Provenance Indicator**    | None               | Trials             | Prompts            | `Models`             |
 | **Modality**                | `Text`               | Sound              | Visualization      | Haptics            |
 
-{/* Design space for surfacing MLLM variations. Each row represents a design dimension that shapes how variations are elicited and presented. The columns list alternative design choices within each dimension. Options marked with backticks indicate the choices implemented in our prototype system: we elicit variants by running multiple *trials* (repeated queries), using different *prompts*, and querying multiple *models* (GPT-4o, Gemini-1.5-Pro, Claude-3.7-Sonnet). We present variations using a *list* format, a *variation-aware description* that integrates agreements and disagreements inline, and a separate *variation summary*. We compare at the granularity of *atomic facts* (individual descriptive claims). We provide three support indicators (*none*, *percentage*, and *source*) to show how many models agree with each claim. We include *model* provenance to identify which models generated each variation. Finally, we present all information as *text* to ensure compatibility with screen readers. */}
+Design space for surfacing MLLM variations. `Alternatives` marked with backticks indicate the choices implemented in our prototype system. 
 
+We elicit variants by running multiple **trials** (repeated queries), using different **prompts**, and querying multiple **models**. We then compare MLLM-generated descriptions at the granularity of **atomic facts** (individual descriptive claims) and present variations using a **list** format, a **variation-aware description**, and a separate **variation summary**. 
 
-## Presentation Styles
+## Support Indicators
+
+We provide three support indicators (**language**,**percentage**, and **source**) to show how many of each model agree with each claim.
 
 | **None** | **Language** | **Percentage** | **Source** |
 |-----------|--------------|----------------|-------------|
@@ -93,16 +96,22 @@ Variation-aware description without support indicator and with three variant sup
 
 ## Results
 
+**Surfacing variations in MLLM responses significantly increased the number of unreliable claims identified** by 4.9x for **ours** or 4.2x for **list** compared to presenting a **single** description. **Variations also significantly decreased the perceived reliability of MLLM responses** from 5.78 of 7 for a single description to 4.76 for a list of descriptions and 3.93 for ours. 
+
 <Figure>
-  <Picture slot="figure" src="../assets/results_bars.pdf" alt="Results" invertInDarkMode />
+  <Picture slot="figure" src="../assets/results_bars.pdf" alt="Two bar charts compare three presentation styles—Single (red), List (yellow), and Ours (blue)—on two metrics: the number of identified unreliable claims (left) and perceived reliability (right). The left chart shows that Ours led to significantly more unreliable claims being identified across all categories (Overall, Model Limitation, Image Quality, and Subjectivity). The right chart shows Single descriptions were rated highest in perceived reliability, followed by List, with Ours rated lowest in several categories. Statistical significance is indicated with asterisks (* p < 0.05, ** p < 0.01, *** p < 0.001)." invertInDarkMode />
   <Fragment slot="caption"> <b>Left:</b> average identified unreliable claims reported by participants overall and in each image category. <br /> <b>Right:</b> average perceived reliability rating (1 = not reliable at all, 7 = most reliable) overall and in each image category. <br />
   Error bars represent a 95\% confidence interval. We applied the Friedman test followed by pairwise Wilcoxon signed-rank tests with Bonferroni correction. Significance is marked as * p < 0.05, ** p < 0.01, and *** p < 0.001.</Fragment>
 </Figure>
 
+11 of 15 participants ranked our **variation summary (ours)** as their favorite option with 9 of 15 ranking it as their second favorite, while only 5 participants rated the list or single description as their first or second favorite, indicating strong support for our aggregated variation approaches. 
+
 <Figure>
-  <Picture slot="figure" src={preferences} alt="Preferences" invertInDarkMode />
+  <Picture slot="figure" src={preferences} alt="Two horizontal stacked bar charts. Left: titled Preference for Presentation Style compares user rankings (1 = most preferred, 4 = least preferred) across four styles: Variation Summary, Variation-Aware Description, List of Multiple Descriptions, and Single Description. Variation Summary received the most Rank 1 votes (11), followed by Variation-Aware Description (9). Single Description received the most Rank 4 votes (7), indicating it was the least preferred overall. Each bar is color-coded by rank. Right: titled Preference for Support Indicator compares user rankings (1 = most preferred, 4 = least preferred) for four styles: Source, Percentage, None, and Language. Source received the most Rank 1 and Rank 2 votes combined (5 and 7), indicating a strong preference. Language received the most Rank 4 votes (7), making it the least preferred overall. Each bar is divided into four color-coded segments representing ranks 1 through 4." invertInDarkMode />
   <Fragment slot="caption"> <b>Left:</b> Participants' preference for variation presentation style and single description. <br/> <b>Right:</b>  Participants’ preference for support indicators <br/> (1 = most preferred, 4 = least preferred)</Fragment>
 </Figure>
+
+All BLV participants wanted to use our variation surfacing prototype in the future for a variety of purposes from **high-stakes scenarios** such as assessing the path of an incoming tornado to **obtaining subjective critiques** for social media posts.
 
 
 
